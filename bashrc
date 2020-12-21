@@ -49,9 +49,8 @@ alias ls='ls -hFG'
 alias ta='tmux a -t'
 alias tl='tmux ls'
 alias tn='tmux new -s '
-alias tk='tmux kill-session -t '
+alias td='tmux kill-session -t '
 alias vi='vim'
-alias vimdiff='vim -d'
 
 # Safety
 alias cp='cp -i'
@@ -62,9 +61,7 @@ alias ln='ln -i'
 bind '"[A":history-search-backward'
 bind '"[B":history-search-forward'
 
-alias sshwp='ssh -p 65002 u392871808@31.170.161.64'
-alias sshvivdev='ssh -i ~/.ssh/id_rsa ec2-user@3.1.167.6'
-
+# Git
 alias gs='git status'
 alias gb='git branch'
 alias gco='git checkout'
@@ -75,32 +72,11 @@ alias ga='git add'
 alias ga.='git add .'
 alias gl='git log'
 
-# Maven
-alias mvndct='mvn -Dmaven.surefire.debug clean test'
-alias mvnct='mvn clean test'
-alias mvnci='mvn clean install'
-alias mvnrun='mvn spring-boot:run'
+# Ctags
+alias ctags='/usr/local/bin/ctags'
 
-# Exports
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
+# Autocomplete
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 # PATH
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$JAVA_HOME/bin
-export PATH="$PATH":/usr/local/go/bin
-export PATH="$PATH":~/Library/Python/3.7/bin
-export PATH="$PATH":/usr/local/opt/mysql\@5.7/bin/
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# load shopify-app-cli, but only if present and the shell is interactive
-if [[ -f "/Users/yamil.rivera/.shopify-app-cli/shopify.sh"  ]] && [[ hB == *i* ]]; then
-  source "/Users/yamil.rivera/.shopify-app-cli/shopify.sh"
-fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/yamil.rivera/google-cloud-sdk/path.bash.inc' ]; then . '/Users/yamil.rivera/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/yamil.rivera/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/yamil.rivera/google-cloud-sdk/completion.bash.inc'; fi
+export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$JAVA_HOME/bin:$HOME/go/bin
