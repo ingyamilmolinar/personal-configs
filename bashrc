@@ -162,6 +162,7 @@ alias tn='tmux new -s '
 alias tk='tmux kill-session -t '
 alias vi='vim'
 alias copy="xclip -selection c"
+alias copy2="xclip -sel clip"
 alias paste="xclip -selection c -o"
 
 # Safety
@@ -184,7 +185,44 @@ alias ga='git add'
 alias ga.='git add .'
 alias gl='git log'
 
+alias ns='nix-shell'
+alias cleanup-vim-backups="find . -name '.*.sw*' | xargs -L 1 rm -f"
+alias repeat-until-fail="
+BACKEND_TEST=notebooks make backend-cluster-test
+while [ \$? -eq 0  ]; do
+	    BACKEND_TEST=notebooks make backend-cluster-test
+done"
+
+alias helios-verify='helios-lint && make backend-go-tools && make backend-graphql-check && make backend-check-go-deps && helios-init && helios-test'
+alias helios-clean-test='helios-init && helios-test'
+alias helios-test='make backend-test && make postgres-test-reset postgres-test-go && make postgres-test-reset backend-integration-test'
+alias helios-lint='make backend-lint'
+alias helios-reload='make kube-reload-go-services && deploy/kube/util/reload-svlcontroller-img.sh'
+alias helios-db-reset='make kube-reset-postgres'
+alias helios-db-connect='psql -h 127.0.0.1 -U postgres freya'
+alias helios-test-db-connect='psql -h 127.0.0.1 -U postgres test'
+alias helios-restart='make kube-stop && make kube-start'
+alias helios-build='make backend-debug'
+alias helios-init='make kube-init'
+alias helios-init-fe='helios-init && make frontend-start'
+alias helios-bastion-login="ssh bastion1b-useast.cloud.memcompute.com"
+alias helios-get-k3d-node-ip='kubectl get node "${KUBE_NODE_NAME}" -o jsonpath="{.status.addresses[0].address}"'
+alias helios-integration-test='FREYA_RUN_DIR=go/src/freya REALM_SECRETS_PATH=$(pwd)/test/realm-secrets.json REVOPS_CONFIG_PATH=$(pwd)/test/revops-config.json FREYA_DB_HOST=127.0.0.1 ./run.sh go test -p=1 -count=1 -tags=integration '
+alias helios-clean-k8s-clusters="kubectl delete memsqlcluster --all && kubectl get deployments | grep operator | awk '{print \$1}' | xargs kubectl delete deployment"
+
 # Exports
 export EDITOR=vim
-export PATH="$PATH:~/go/bin"
+export PATH=$PATH:/usr/local/go/bin:~/go/bin
+export KUBECONFIG=/home/ymolinar/Repos/helios/test/kubeconfig.yml
 
+# Set nix env variables
+. ${HOME}/.nix-profile/etc/profile.d/nix.sh
+# Added by Nix installer
+if [ -e ${HOME}/.nix-profile/etc/profile.d/nix.sh ]; then . ${HOME}/.nix-profile/etc/profile.d/nix.sh; fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Direnv
+eval "$(direnv hook bash)"
