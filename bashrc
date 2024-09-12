@@ -213,7 +213,7 @@ alias helios-clean-k8s-clusters="kubectl delete memsqlcluster --all && kubectl g
 # Exports
 export EDITOR=vim
 export PATH=$PATH:/usr/local/go/bin:~/go/bin
-export KUBECONFIG=/home/ymolinar/Repos/helios/test/kubeconfig.yml
+export KUBECONFIG=~/Repos/helios/test/kubeconfig.yml
 
 # Set nix env variables
 . ${HOME}/.nix-profile/etc/profile.d/nix.sh
